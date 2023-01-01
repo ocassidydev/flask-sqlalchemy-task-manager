@@ -41,7 +41,7 @@ def delete_category(category_id):
     db.session.delete(category)
     db.session.commit()
     categories = list(Category.query.order_by(Category.category_name).all())
-    return render_template("categories.html", categories=categories)
+    return redirect(url_for("categories"))
 
 
 @app.route("/add_task", methods=["GET", "POST"])
@@ -85,5 +85,4 @@ def delete_task(task_id):
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
-    tasks = list(Task.query.order_by(Task.task_name).all())
-    return render_template("tasks.html", tasks=tasks)
+    return redirect(url_for("home"))
