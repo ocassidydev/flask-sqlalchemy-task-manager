@@ -40,7 +40,6 @@ def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
     db.session.delete(category)
     db.session.commit()
-    categories = list(Category.query.order_by(Category.category_name).all())
     return redirect(url_for("categories"))
 
 
@@ -51,8 +50,8 @@ def add_task():
         task = Task(
             task_name=request.form.get("task_name"),
             task_description=request.form.get("task_description"),
-            its_urgent=bool(True if request.form.get("is_urgent") else False),
-            due_data=request.form.get("due_date"),
+            is_urgent=bool(True if request.form.get("is_urgent") else False),
+            due_date=request.form.get("due_date"),
             category_id=request.form.get("category_id")
         )
         db.session.add(task)
@@ -68,9 +67,9 @@ def edit_task(task_id):
     if request.method == "POST":
         task.task_name = request.form.get("task_name")
         task.task_description = request.form.get("task_description")
-        task.its_urgent = bool(
+        task.is_urgent = bool(
             True if request.form.get("is_urgent") else False)
-        task.due_data = request.form.get("due_date")
+        task.due_date = request.form.get("due_date")
         task.category_id = request.form.get("category_id")
         db.session.commit()
         return redirect(url_for("home"))
